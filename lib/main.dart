@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'dart:convert' as convert;
+import 'package:http/http.dart' as http;
 import 'package:flutter_navigation/home_page.dart';
+
+import 'display_data.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,6 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Navigation',
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -83,15 +87,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 20,),
                 Container(
                   height: 45,
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: ElevatedButton(onPressed: (){
+                  width: MediaQuery.of(context).size.width * 0.5,
+                  child: ElevatedButton(onPressed: () async {
+
 
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SecondHomePage()),
+                      MaterialPageRoute(builder: (context) =>  const DisplayData()),
                     );
 
-                  }, child: Text("Login")),
+                  }, child: const Text("Login")),
                 )
 
               ],
@@ -101,4 +106,5 @@ class _MyHomePageState extends State<MyHomePage> {
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
+
 }
