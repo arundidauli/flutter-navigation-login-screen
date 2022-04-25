@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
-class SecondHomePage extends StatefulWidget {
-  const SecondHomePage({Key? key}) : super(key: key);
+class VerticalHorizontalList extends StatefulWidget {
+  const VerticalHorizontalList({Key? key}) : super(key: key);
 
   @override
-  State<SecondHomePage> createState() => _SecondHomePage();
+  State<VerticalHorizontalList> createState() => _SecondHomePage();
 }
 
-class _SecondHomePage extends State<SecondHomePage> {
+class _SecondHomePage extends State<VerticalHorizontalList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: ListView.builder(
         itemCount: 20,
-        itemBuilder: (_, i) {
+        itemBuilder: (context, i) {
           if (i < 2) {
             return _horizontalListView();
           } else if (i == 3) {
@@ -73,10 +73,6 @@ class _SecondHomePage extends State<SecondHomePage> {
             offset: const Offset(0, 3), // changes position of shadow
           )],
       ),
-
-
-
-
     );
   }
 }

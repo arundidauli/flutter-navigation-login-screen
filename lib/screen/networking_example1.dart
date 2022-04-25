@@ -4,16 +4,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-
-
-Future<Album> fetchAlbum() async {
+Future<List<Album>> fetchAlbum() async {
   final response = await http
-      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums/1'));
+      .get(Uri.parse('https://jsonplaceholder.typicode.com/albums'));
 
   if (response.statusCode == 200) {
     // If the server did return a 200 OK response,
     // then parse the JSON.
-    return Album.fromJson(jsonDecode(response.body));
+    List jsonResponse = json.decode(response.body);
+    return jsonResponse.map((data) =>  Album.fromJson(data)).toList();
+    //return Album.fromJson(jsonDecode(response.body));
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -41,15 +41,15 @@ class Album {
   }
 }
 
-class DisplayData extends StatefulWidget {
-  const DisplayData({Key? key}) : super(key: key);
+class AlbumApp extends StatefulWidget {
+  const AlbumApp({Key? key}) : super(key: key);
 
   @override
-  _DisplayDataState createState() => _DisplayDataState();
+  _MyAppState createState() => _MyAppState();
 }
 
-class _DisplayDataState extends State<DisplayData> {
-  late Future<Album> futureAlbum;
+class _MyAppState extends State<AlbumApp> {
+  late Future<List<Album>> futureAlbum;
 
   @override
   void initState() {
@@ -69,15 +69,24 @@ class _DisplayDataState extends State<DisplayData> {
           title: const Text('Fetch Data Example'),
         ),
         body: Center(
-          child: FutureBuilder<Album>(
+          child: FutureBuilder<List<Album>>(
             future: futureAlbum,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return Text(snapshot.data!.title);
+                List<Album>? data = snapshot.data;
+                return ListView.builder(
+                    itemCount: data?.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Container(
+                        height: 75,
+                        color: Colors.white,
+                        child: Center(child: Text(data![index].title),
+                        ),);
+                    }
+                );
               } else if (snapshot.hasError) {
                 return Text('${snapshot.error}');
               }
-
               // By default, show a loading spinner.
               return const CircularProgressIndicator();
             },
