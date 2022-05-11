@@ -1,34 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation/screen/networking_example.dart';
-import 'package:flutter_navigation/screen/networking_example1.dart';
+import 'home_screen.dart';
 
-
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Flutter Navigation',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(title: 'Flutter Navigation'),
-    );
-  }
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +27,11 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Container(
                     height: MediaQuery.of(context).size.height*0.15,
                     width: MediaQuery.of(context).size.height*0.15,
-                    decoration: const BoxDecoration(
+                    decoration:  const BoxDecoration(
                       image: DecorationImage(
                         image: AssetImage("assets/images/lock.jpg"),
                         fit: BoxFit.fitWidth,
+
                       ),
                     ),
                   ),
@@ -87,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>  const NetworkingExample()),
+                      MaterialPageRoute(builder: (context) =>  const HomePages()),
                     );
 
                   }, child: const Text("Login")),

@@ -1,68 +1,61 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget{
-  const HomeScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Flutter Example",
-      theme: ThemeData(
-        primarySwatch: Colors.green
-      ),
-      home: const HomePages(),
-    );
-  }
-}
-
-class HomePages extends StatelessWidget{
-
+class HomePages extends StatefulWidget {
   const HomePages({Key? key}) : super(key: key);
 
   @override
+  State<HomePages> createState() => _HomePagesState();
+}
+
+class _HomePagesState extends State<HomePages> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("GridView Example"),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context, true);
+            }),
+        actions: <Widget>[
+          IconButton(onPressed: (){
+
+          }, icon:  Icon(Icons.notifications),
+            tooltip: "Save Todo and Retrun to List",
+          ),
+
+        ],
+      ),
       body: Center(
-        child: GridView.count(crossAxisCount: 3,
-        children: List.generate(10, (index) => _myCardItem(context)),
+        child: GridView.count(
+          crossAxisCount: 3,
+          children: List.generate(10, (index) => _myCardItem(context)),
         ),
       ),
     );
   }
-
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 Widget _myCardItem(BuildContext context) {
-  // TODO: implement build
   return Card(
     elevation: 2,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(25.0),
     ),
     child: Container(
-      decoration:  BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          )],
+            offset: Offset(0, 3), // changes position of shadow
+          )
+        ],
         image: const DecorationImage(
-          image: NetworkImage("https://cdn.pixabay.com/photo/2015/10/29/14/38/web-1012467__340.jpg"),
+          image: NetworkImage(
+              "https://cdn.pixabay.com/photo/2015/10/29/14/38/web-1012467__340.jpg"),
           fit: BoxFit.cover,
         ),
       ),
