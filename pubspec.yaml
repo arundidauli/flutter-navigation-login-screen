@@ -69,6 +69,7 @@ flutter:
   assets:
     - assets/images/lock.jpg
     - assets/images/logo.png
+    - assets/images/image1.jpg
     - assets/images/image2.jpg
     - assets/images/image3.jpg
 
