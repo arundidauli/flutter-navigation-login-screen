@@ -4,27 +4,28 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class NetworkingExample extends StatefulWidget {
-  const NetworkingExample({Key? key}) : super(key: key);
+class Example3 extends StatefulWidget {
+  const Example3({Key? key}) : super(key: key);
 
   @override
-  _NetworkingExampleState createState() => _NetworkingExampleState();
+  _ExampleState createState() => _ExampleState();
 }
 
-class _NetworkingExampleState extends State<NetworkingExample> {
+class _ExampleState extends State<Example3> {
   late Future<List<Character>> characterList;
-
   @override
   void initState() {
     super.initState();
     characterList = fetchData();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Breaking Bad Characters"),
+          title: const Text("Characters List"),
         ),
         body: Center(
             child: FutureBuilder<List<Character>>(
@@ -41,7 +42,7 @@ class _NetworkingExampleState extends State<NetworkingExample> {
                             subtitle: Text(data[index].nickname),
                             leading: CircleAvatar(
                               backgroundImage:
-                                  NetworkImage(data[index].img),
+                              NetworkImage(data[index].img),
                             ),
                           );
                         });
@@ -49,12 +50,13 @@ class _NetworkingExampleState extends State<NetworkingExample> {
                     return Text('${snapshot.error}');
                   }
                   return const CircularProgressIndicator();
-                })));
+                }))
+    );
   }
 
   Future<List<Character>> fetchData() async {
     final response =
-        await http.get(Uri.parse("https://breakingbadapi.com/api/characters"));
+    await http.get(Uri.parse("https://breakingbadapi.com/api/characters"));
     if (response.statusCode == 200) {
       List jsonResponse = jsonDecode(response.body);
       return jsonResponse.map((data) => Character.fromJson(data)).toList();
@@ -64,8 +66,9 @@ class _NetworkingExampleState extends State<NetworkingExample> {
       throw Exception('Failed to load album');
     }
   }
-}
 
+
+}
 class Character {
   final int id;
   final String name;
