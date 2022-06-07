@@ -11,9 +11,19 @@ class Example1 extends StatefulWidget {
 class _Example1State extends State<Example1> {
   late String title = "This is Login Form";
 
+  final TextEditingController _emailController=TextEditingController();
+  final TextEditingController _passController=TextEditingController();
+  @override
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration.zero, () async {
+      _emailController.text=(await Utility.getStringValue("email"))!;
+      _passController.text=(await Utility.getStringValue("password"))!;
+
+    });
+
+
   }
 
   @override
@@ -59,6 +69,7 @@ class _Example1State extends State<Example1> {
                 height: 20,
               ),
               TextFormField(
+                controller: _emailController,
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.mail),
                     border: OutlineInputBorder(
@@ -71,6 +82,7 @@ class _Example1State extends State<Example1> {
                 height: 20,
               ),
               TextFormField(
+                controller: _passController,
                 decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.lock),
                     border: OutlineInputBorder(
@@ -118,6 +130,8 @@ class _Example1State extends State<Example1> {
                       setState(() {
                         title = "This is Register Form";
                       });
+                      Utility.setStringValue("email", _emailController.text.toString());
+                      Utility.setStringValue("password", _passController.text.toString());
                     },
                     child: const Text(
                       "Register",

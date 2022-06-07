@@ -43,17 +43,14 @@ class HomePages extends StatefulWidget {
 
 class _HomePagesState extends State<HomePages> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late String? email="";
 
   @override
   void initState() {
     super.initState();
 
-    Utility.checkConnection().then((value) {
-      if (kDebugMode) {
-        print(value);
-      }
-      errorMsg("There is not internet connection!", value);
-
+    setState(() {
+      checkInternet();
     });
 
   }
@@ -62,7 +59,6 @@ class _HomePagesState extends State<HomePages> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      drawer: _drawerHome(context),
       appBar: AppBar(
         title: const Text("Flutter Examples"),
         leading: IconButton(
@@ -77,6 +73,7 @@ class _HomePagesState extends State<HomePages> {
           ),
         ],
       ),
+
       body: Center(
         child: GridView.count(
           crossAxisCount: 3,
@@ -84,16 +81,44 @@ class _HomePagesState extends State<HomePages> {
               (index) => _myCardItem(context, Constants.listOfExamples[index])),
         ),
       ),
+      drawer: _drawerHome(context,email),
+
     );
+  }
+
+
+  void checkInternet(){
+    Future.delayed(Duration.zero,() async{
+      email=(await Utility.getStringValue("email"))!;
+      bool status=await Utility.checkConnection();
+      setState(() {
+        if(!status){
+          final snackBar = SnackBar(
+            content: const Text('There is no internet connection!'),
+            backgroundColor: (Colors.redAccent),
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () {
+                setState(() {
+                });
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+
+      });
+
+    });
   }
 }
 
-Widget _drawerHome(BuildContext context) {
+Widget _drawerHome(BuildContext context,String? email) {
   return Drawer(
     child: ListView(
       children: <Widget>[
         UserAccountsDrawerHeader(
-          accountEmail: const Text("arun@gmail.com"),
+          accountEmail: Text(email!),
           accountName: const Text("Arun Android"),
           currentAccountPicture: ClipRRect(
             borderRadius: BorderRadius.circular(110),
@@ -118,7 +143,7 @@ Widget _drawerHome(BuildContext context) {
               ),
             )
           ],
-          decoration: const BoxDecoration(color: shrineBrown600),
+          decoration: const BoxDecoration(color: AppColor.shrineBrown600),
         ),
         ListTile(
           leading: const Icon(Icons.assessment),
@@ -240,76 +265,18 @@ Widget _myCardItem(BuildContext context, String index) {
   );
 }
 
-Widget errorMsg(String text,bool show){
-  //error message widget.
-  if(show == true){
-    //if error is true then show error message box
-    return Container(
-      padding: const EdgeInsets.all(10.00),
-      margin: const EdgeInsets.only(bottom: 10.00),
-      color: Colors.red,
-      child: Row(children: [
-
-        Container(
-          margin: const EdgeInsets.only(right:6.00),
-          child: const Icon(Icons.info, color: Colors.white),
-        ), // icon for error message
-
-        Text(text, style: const TextStyle(color: Colors.white)),
-        //show error message text
-      ]),
-    );
-  }else{
-    return Container();
-    //if error is false, return empty container.
-  }
-}
-
-/*
-class SplashPage extends StatefulWidget {
-
-  const SplashPage({Key? key}) : super(key: key);
-
-  @override
-  State<SplashPage> createState() => _SplashPageState();
-
-}
-
-class _SplashPageState extends State<SplashPage> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(
-        const Duration(seconds: 5),
-        () => Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (BuildContext context) => const LoginScreen())));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Center(
-        child: SizedBox(
-            width: 150,
-            height: 150,
-            child: Image.asset("assets/images/logo.png")),
-      ),
-    );
-  }
-}*/
 ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
-    colorScheme: _shrineColorScheme,
-    toggleableActiveColor: shrinePink400,
-    accentColor: shrineBrown900,
-    primaryColor: shrinePink100,
-    buttonColor: shrinePink100,
-    scaffoldBackgroundColor: shrineBackgroundWhite,
-    cardColor: shrineBackgroundWhite,
-    textSelectionColor: shrinePink100,
-    errorColor: shrineErrorRed,
+    colorScheme: AppColor.appShrineColorScheme,
+    toggleableActiveColor: AppColor.shrinePink400,
+    accentColor: AppColor.shrineBrown900,
+    primaryColor: AppColor.shrinePink100,
+    buttonColor: AppColor.shrinePink100,
+    scaffoldBackgroundColor: AppColor.shrineBackgroundWhite,
+    cardColor: AppColor.shrineBackgroundWhite,
+    textSelectionColor: AppColor.shrinePink100,
+    errorColor: AppColor.shrineErrorRed,
     primaryIconTheme: _customIconTheme(base.iconTheme),
     textTheme: _buildShrineTextTheme(base.textTheme),
     primaryTextTheme: _buildShrineTextTheme(base.primaryTextTheme),
@@ -319,7 +286,7 @@ ThemeData _buildShrineTheme() {
 }
 
 IconThemeData _customIconTheme(IconThemeData original) {
-  return original.copyWith(color: shrineBrown900);
+  return original.copyWith(color: AppColor.shrineBrown900);
 }
 
 TextTheme _buildShrineTextTheme(TextTheme base) {
@@ -328,33 +295,19 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
         caption: base.caption!.copyWith(
           fontWeight: FontWeight.w400,
           fontSize: 14,
-          letterSpacing: defaultLetterSpacing,
+          letterSpacing: AppColor.defaultLetterSpacing,
         ),
         button: base.button!.copyWith(
           fontWeight: FontWeight.w500,
           fontSize: 14,
-          letterSpacing: defaultLetterSpacing,
+          letterSpacing: AppColor.defaultLetterSpacing,
         ),
       )
       .apply(
         fontFamily: 'Rubik',
-        displayColor: shrineBrown900,
-        bodyColor: shrineBrown900,
+        displayColor: AppColor.shrineBrown900,
+        bodyColor: AppColor.shrineBrown900,
       );
 }
 
-ColorScheme _shrineColorScheme = const ColorScheme(
-  primary: shrinePink400,
-  primaryVariant: shrineBrown900,
-  secondary: shrinePink50,
-  secondaryVariant: shrineBrown900,
-  surface: shrineSurfaceWhite,
-  background: shrineBackgroundWhite,
-  error: shrineErrorRed,
-  onPrimary: shrineBrown900,
-  onSecondary: shrineBrown900,
-  onSurface: shrineBrown900,
-  onBackground: shrineBrown900,
-  onError: shrineBackgroundWhite,
-  brightness: Brightness.light,
-);
+

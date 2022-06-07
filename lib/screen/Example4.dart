@@ -1,5 +1,4 @@
-import 'dart:async';
-import 'dart:convert';
+
 import 'dart:io';
 import 'package:flutter_navigation/utils/utils.dart';
 import 'package:image_picker/image_picker.dart';
@@ -86,13 +85,33 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
   void initState() {
     super.initState();
     imagePicker = ImagePicker();
-    if(Utility.checkConnection() as bool){
-      errorMsg("", Utility.checkConnection() as bool);
-    }else{
-      errorMsg("No internet connection", Utility.checkConnection() as bool);
-    }
+    checkInternet();
+
   }
 
+  void checkInternet(){
+    Future.delayed(Duration.zero,() async{
+      bool status=await Utility.checkConnection();
+      setState(() {
+        if(!status){
+          final snackBar = SnackBar(
+            content: const Text('There is no internet connection!'),
+            backgroundColor: (Colors.redAccent),
+            action: SnackBarAction(
+              label: 'Retry',
+              onPressed: () {
+                setState(() {
+                });
+              },
+            ),
+          );
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        }
+
+      });
+
+    });
+  }
 
 
   @override
