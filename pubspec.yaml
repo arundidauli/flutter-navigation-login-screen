@@ -44,6 +44,7 @@ dev_dependencies:
   image_picker: ^0.8.5+3
   connectivity: ^3.0.6
   shared_preferences: ^2.0.15
+  carousel_slider: ^4.1.1
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

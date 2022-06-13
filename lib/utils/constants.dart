@@ -5,7 +5,7 @@ import 'colors.dart';
 
 
 class Constants{
-  static const List listOfExamples=["Toast,SnackBar,AlertDialog","Button,TextView,EditText,ImageView","List-Horizontal/Vertical","Network Call","Pick Image from (Gallery/Camera)","Session","Navigation/push/Pop","Useful Widget","Animation/effect"];
+  static const List listOfExamples=["Toast,SnackBar,AlertDialog","Button,TextView,EditText,ImageView","List-Horizontal/Vertical","Network Call","Pick Image from (Gallery/Camera)","Session","Example UI Design","Useful Widget","Animation/effect"];
 
   static void showSnackBar(BuildContext context,String message){
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
