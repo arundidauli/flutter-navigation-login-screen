@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation/utils/constants.dart';
-import 'package:flutter_navigation/utils/utils.dart';
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -24,9 +24,10 @@ class _ExampleState extends State<Example6> {
   void initState() {
     super.initState();
   }
+
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     Text(
       'Index 0: Home',
@@ -41,12 +42,10 @@ class _ExampleState extends State<Example6> {
       style: optionStyle,
     ),
   ];
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
-
-      Constants.showSnackBar(context, "$index Clicked");
-
     });
   }
 
@@ -68,12 +67,16 @@ class _ExampleState extends State<Example6> {
               ),
               items: imageSliders,
             ),
-           const Align(
+            const Align(
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Text(
-                  "Popular Flats",style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87,fontSize: 18),
+                  "Popular Flats",
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                      fontSize: 18),
                 ),
               ),
             ),
@@ -81,7 +84,7 @@ class _ExampleState extends State<Example6> {
               child: ListView.builder(
                 itemCount: 15,
                 itemBuilder: (context, i) {
-                  return verticalItemRow(i);
+                  return verticalItemRow(context, i);
                 },
               ),
             )
@@ -151,25 +154,101 @@ class _ExampleState extends State<Example6> {
       .toList();
 }
 
-Widget verticalItemRow(int po) {
+Widget verticalItemRow(BuildContext context, int po) {
   return Card(
     elevation: 8,
     shadowColor: Colors.greenAccent,
     shape: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(15.0),
+        borderRadius: BorderRadius.circular(25),
         borderSide: const BorderSide(color: Colors.white10)),
-    child: Container(
-      height: 150,
-      width: double.infinity,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15.0),
-          image: const DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage('assets/images/image3.jpg'))),
-      child: const Padding(
-        padding: EdgeInsets.all(10.0),
-        child: Text('Nouveautés'),
-      ),
+    child: Stack(
+      children: [
+        Container(
+          height: MediaQuery.of(context).size.height * 0.4,
+          width: double.infinity,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              image: const DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/images/image3.jpg'))),
+        ),
+        Container(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.4,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Colors.black.withOpacity(0.2),
+                    Colors.black.withOpacity(0.8),
+                  ])),
+          child: Align(
+            alignment: Alignment.bottomLeft,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Big Time Hair Saloon",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white, fontSize: 20, height: 1.5),
+                      ),
+                      RichText(
+                        text: const TextSpan(
+                          text: 'Rs.',
+                          style: TextStyle(
+                              color: Colors.white, fontSize: 20, height: 1.5),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: '\$8.99',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 20,
+                                height: 1.5,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                            TextSpan(
+                              text: ' \$3.99',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  height: 1.5),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    child: Row(
+                      children: const [
+                        Icon(Icons.location_on_sharp,color: Colors.white,size: 15,),
+                        Text(" Location",style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            height: 1.5),)
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     ),
     margin: const EdgeInsets.all(10.0),
   );

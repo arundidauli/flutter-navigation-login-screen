@@ -45,6 +45,7 @@ dev_dependencies:
   connectivity: ^3.0.6
   shared_preferences: ^2.0.15
   carousel_slider: ^4.1.1
+  flutter_svg: ^0.17.4
 
 
   # The "flutter_lints" package below contains a set of recommended lints to

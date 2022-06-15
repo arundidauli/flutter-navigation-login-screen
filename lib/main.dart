@@ -267,6 +267,7 @@ Widget _myCardItem(BuildContext context, String index) {
 ThemeData _buildShrineTheme() {
   final ThemeData base = ThemeData.light();
   return base.copyWith(
+    visualDensity: VisualDensity.adaptivePlatformDensity,
     colorScheme: AppColor.appShrineColorScheme,
     toggleableActiveColor: AppColor.shrinePink400,
     accentColor: AppColor.shrineBrown900,
