@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import '../utils/dialogs.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:flutter_navigation/utils/dialogs.dart';
 
 class Example0 extends StatefulWidget {
   const Example0({Key? key}) : super(key: key);
@@ -10,6 +10,8 @@ class Example0 extends StatefulWidget {
 }
 
 class _Example0State extends State<Example0> {
+  bool _isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -28,11 +30,11 @@ class _Example0State extends State<Example0> {
               onPressed: () {
                 // Respond to button press
                 Fluttertoast.showToast(
-                    msg: "This is a Toast message",  // message
+                    msg: "This is a Toast message", // message
                     toastLength: Toast.LENGTH_SHORT, // length
-                    gravity: ToastGravity.CENTER,    // location
-                    timeInSecForIosWeb: 1               // duration
-                );
+                    gravity: ToastGravity.CENTER, // location
+                    timeInSecForIosWeb: 1 // duration
+                    );
               },
               child: const Text('TOAST EXAMPLE BUTTON'),
             ),
@@ -44,15 +46,20 @@ class _Example0State extends State<Example0> {
                   content: Text("OUTLINED BUTTON Clicked"),
                 ));
               },
-              child: const Text("SNACKBAR EXAMPLE BUTTON"),
+              child: const Text("SNACKBar EXAMPLE BUTTON"),
             ),
             const SizedBox(height: 8.0),
             ElevatedButton(
               onPressed: () {
                 // Respond to button press
-                final action= Dialogs.alertDialog(context,"Alert Dialog","Would you like to continue learning how to use Flutter alerts?","Cancel","Save");
+                final action = Dialogs.alertDialog(
+                    context,
+                    "Alert Dialog",
+                    "Would you like to continue learning how to use Flutter alerts?",
+                    "Cancel",
+                    "Save");
                 //cancel and save are the button text for cancel and save operation
-                if(action==alertDialogAction.save){
+                if (action == alertDialogAction.save) {
                   //do something
                   Navigator.pop(context);
                 }
@@ -60,19 +67,40 @@ class _Example0State extends State<Example0> {
               child: const Text("EXAMPLE Alert Dialog BUTTON"),
             ),
             const SizedBox(height: 8.0),
-            RaisedButton(
+            ElevatedButton(
               onPressed: () {
                 // Respond to button press
                 Dialogs.showAlertDialog(context);
               },
               child: const Text("CUSTOM Alert Dialog BUTTON"),
             ),
+            const SizedBox(height: 8.0),
+            ElevatedButton(
+              onPressed: () {
+                // Respond to button press
+                setState(() {
+                  _isLoading = true;
+                });
+
+                Future.delayed(const Duration(seconds: 3), () {
+                  setState(() {
+                    _isLoading = false;
+                  });
+                });
+
+              },
+              child: SizedBox(
+                height: 55,
+                width: MediaQuery.of(context).size.width*0.80,
+                child: Center(
+                    child: _isLoading ? const CircularProgressIndicator(color:  Colors.white,) : const Text(
+                      "Show ProgressBar",style: TextStyle(fontSize: 18,color: Colors.white),
+                    )),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
-
-
 }
-

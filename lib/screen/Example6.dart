@@ -164,7 +164,7 @@ Widget verticalItemRow(BuildContext context, int po) {
     child: Stack(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.2,
           width: double.infinity,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
@@ -174,7 +174,7 @@ Widget verticalItemRow(BuildContext context, int po) {
         ),
         Container(
           width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height * 0.4,
+          height: MediaQuery.of(context).size.height * 0.2,
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
               gradient: LinearGradient(

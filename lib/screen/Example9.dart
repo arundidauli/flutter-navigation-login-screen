@@ -22,10 +22,10 @@ class _ExampleState extends State<Example9> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Bad Characters List"),
+          title: const Text("Example Nine"),
         ),
         body: const Center(
-    child: Text("Example 9"),
+    child: Text("Example Nine"),
     ),);
   }
 

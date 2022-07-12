@@ -14,6 +14,8 @@ import 'package:flutter_navigation/utils/colors.dart';
 import 'package:flutter_navigation/utils/constants.dart';
 import 'package:flutter_navigation/utils/utils.dart';
 
+import 'animations/EnterExitRoute.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -178,10 +180,13 @@ Widget _myCardItem(BuildContext context, String index) {
         splashColor: Colors.orange,
         onTap: () async {
           if (index == Constants.listOfExamples[0]) {
-            Navigator.push(
+
+            Navigator.push(context,
+                EnterExitRoute(exitPage: const HomePages(), enterPage: const Example0()));
+           /* Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const Example0()),
-            );
+            );*/
           } else if (index == Constants.listOfExamples[1]) {
             Navigator.push(
               context,
